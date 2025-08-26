@@ -1,15 +1,15 @@
 # Use official lightweight Python image
-FROM python3.11-slim
+FROM python:3.11-slim
 
 # Set working directory
-WORKDIR app
+WORKDIR /app
 
 # Install system dependencies (for Pillow, etc.)
-RUN apt-get update && apt-get install -y 
-    build-essential 
-    libpq-dev 
-    gcc 
-    && rm -rf varlibaptlists
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements file if exists (better for caching)
 COPY requirements.txt .
@@ -24,4 +24,4 @@ COPY . .
 EXPOSE 5000
 
 # Run the application
-CMD [python, app.py]
+CMD ["python", "app.py"]
